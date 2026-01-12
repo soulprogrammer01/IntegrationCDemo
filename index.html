@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrations - AI Integration Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <a href="#" class="back-link">
+                <span class="material-icons-outlined">arrow_back</span>
+                Back
+            </a>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">Integrations</a>
+                <a href="#" class="nav-item">CE Roles & Users</a>
+                <a href="#" class="nav-item">User Defined Fields</a>
+                <a href="#" class="nav-item">Workflow Settings</a>
+                <a href="#" class="nav-item">Message Templates</a>
+                <a href="#" class="nav-item">Company Settings</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Toolbar -->
+            <header class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <span class="material-icons-outlined">search</span>
+                        <input type="text" placeholder="Search Applications">
+                    </div>
+                    <button class="icon-btn filter-btn">
+                        <span class="material-icons-outlined">tune</span>
+                    </button>
+                    <div class="view-dropdown">
+                        <span>Default View</span>
+                        <span class="material-icons-outlined">expand_more</span>
+                    </div>
+                    <button class="icon-btn share-btn">
+                        <span class="material-icons-outlined">share</span>
+                    </button>
+                </div>
+                <div class="toolbar-right">
+                    <span class="app-count">220 Applications</span>
+                    <div class="view-toggle">
+                        <button class="toggle-btn active">
+                            <span class="material-icons-outlined">view_list</span>
+                        </button>
+                        <button class="toggle-btn">
+                            <span class="material-icons-outlined">grid_view</span>
+                        </button>
+                    </div>
+                    <button class="icon-btn more-btn">
+                        <span class="material-icons-outlined">more_vert</span>
+                    </button>
+                    <button class="primary-btn" id="addIntegrationBtn">
+                        Add New Integration
+                    </button>
+                </div>
+            </header>
+
+            <!-- Data Table -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Vendor</th>
+                            <th>Category</th>
+                            <th>Vendor Spend<br><span class="th-sub">(Last 12...)</span></th>
+                            <th>Status</th>
+                            <th>Last Sync</th>
+                            <th>Usage</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Rows will be inserted by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <div class="rows-per-page">
+                    <span>Rows per page</span>
+                    <select>
+                        <option>100</option>
+                        <option>50</option>
+                        <option>25</option>
+                    </select>
+                </div>
+                <span class="page-info">1 - 100 of 235</span>
+                <div class="page-controls">
+                    <button class="page-btn" disabled>
+                        <span class="material-icons-outlined">chevron_left</span>
+                    </button>
+                    <button class="page-btn">
+                        <span class="material-icons-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Integration Builder Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="integrationModal">
+            <div class="modal-header">
+                <div class="modal-title-section">
+                    <h2>Add New Integration</h2>
+                    <div class="sandbox-badge">
+                        <span class="material-icons-outlined">security</span>
+                        Secure Build Environment Active
+                    </div>
+                </div>
+                <button class="close-btn" id="closeModal">
+                    <span class="material-icons-outlined">close</span>
+                </button>
+            </div>
+
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <span>Configuration</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <span>AI Builder</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <span>Verification</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <span>Audit</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="5">
+                    <div class="step-circle">5</div>
+                    <span>Activation</span>
+                </div>
+            </div>
+
+            <!-- Step Content -->
+            <div class="modal-body">
+                <!-- Step 1: Configuration -->
+                <div class="step-content active" data-step="1">
+                    <div class="form-group">
+                        <label>Integration Name</label>
+                        <input type="text" placeholder="e.g., Customer-Internal-CRM" id="integrationName">
+                    </div>
+                    <div class="form-group">
+                        <label>API Documentation URL</label>
+                        <div class="url-input-group">
+                            <input type="url" placeholder="https://api.example.com/docs" id="apiUrl">
+                            <button class="upload-btn">
+                                <span class="material-icons-outlined">upload_file</span>
+                                Upload
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Required Capabilities</label>
+                        <div class="capability-select-container">
+                            <button type="button" class="capability-dropdown-btn" id="capabilityDropdownBtn">
+                                <span>Select capabilities...</span>
+                                <span class="material-icons-outlined">expand_more</span>
+                            </button>
+                            <div class="capability-dropdown-menu" id="capabilityDropdownMenu">
+                                <label class="dropdown-option">
+                                    <input type="checkbox" value="user_management" checked>
+                                    <span class="option-check"></span>
+                                    <div class="option-info">
+                                        <span class="option-name">User Management</span>
+                                        <span class="option-desc">User discovery, Provisioning & status sync</span>
+                                    </div>
+                                </label>
+                                <label class="dropdown-option">
+                                    <input type="checkbox" value="license_tracking" checked>
+                                    <span class="option-check"></span>
+                                    <div class="option-info">
+                                        <span class="option-name">License Tracking</span>
+                                        <span class="option-desc">Entitlements & SKUs</span>
+                                    </div>
+                                </label>
+                                <label class="dropdown-option">
+                                    <input type="checkbox" value="activity_logs">
+                                    <span class="option-check"></span>
+                                    <div class="option-info">
+                                        <span class="option-name">Activity Logs</span>
+                                        <span class="option-desc">Last login, event streams, usage</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="selected-capabilities" id="selectedCapabilities">
+                                <span class="capability-tag" data-value="user_management">
+                                    User Management
+                                    <button type="button" class="remove-tag">&times;</button>
+                                </span>
+                                <span class="capability-tag" data-value="license_tracking">
+                                    License Tracking
+                                    <button type="button" class="remove-tag">&times;</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: AI Builder -->
+                <div class="step-content" data-step="2">
+                    <div class="ai-builder-container">
+                        <div class="ai-step" id="aiAnalyze">
+                            <div class="ai-step-icon">
+                                <span class="material-icons-outlined">find_in_page</span>
+                            </div>
+                            <div class="ai-step-content">
+                                <h4>Analyze</h4>
+                                <p>Reading API documentation...</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="ai-step-status">
+                                <span class="material-icons-outlined status-pending">hourglass_empty</span>
+                            </div>
+                        </div>
+                        <div class="ai-step" id="aiGenerate">
+                            <div class="ai-step-icon">
+                                <span class="material-icons-outlined">code</span>
+                            </div>
+                            <div class="ai-step-content">
+                                <h4>Generate</h4>
+                                <p>Creating JSON Connector Manifest...</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="ai-step-status">
+                                <span class="material-icons-outlined status-pending">hourglass_empty</span>
+                            </div>
+                        </div>
+                        <div class="ai-step" id="aiValidate">
+                            <div class="ai-step-icon">
+                                <span class="material-icons-outlined">verified</span>
+                            </div>
+                            <div class="ai-step-content">
+                                <h4>Validate</h4>
+                                <p>Running sandbox tests...</p>
+                                <div class="progress-bar">
+                                    <div class="progress-fill"></div>
+                                </div>
+                            </div>
+                            <div class="ai-step-status">
+                                <span class="material-icons-outlined status-pending">hourglass_empty</span>
+                            </div>
+                        </div>
+                        <div class="generated-manifest" id="manifestPreview" style="display: none;">
+                            <h4>Generated Manifest Preview</h4>
+                            <pre><code id="manifestCode"></code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Verification -->
+                <div class="step-content" data-step="3">
+                    <div class="verification-container">
+                        <div class="credentials-section">
+                            <h4>Test Credentials</h4>
+                            <p class="section-desc">Enter your API credentials to perform a dry run test.</p>
+                            <div class="form-group">
+                                <label>API Key / Token</label>
+                                <input type="password" placeholder="Enter your API key" id="testApiKey">
+                            </div>
+                            <div class="form-group">
+                                <label>Base URL</label>
+
+                                <input type="text" placeholder="https://api.example.com/v1" id="testBaseUrl">
+                            </div>
+                        </div>
+                        <div class="dry-run-section" id="dryRunSection" style="display: none;">
+                            <h4>Dry Run Results</h4>
+                            <div class="dry-run-results" id="dryRunResults">
+                                <!-- Results will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Audit -->
+                <div class="step-content" data-step="4">
+                    <div class="audit-container">
+                        <div class="audit-header">
+                            <span class="material-icons-outlined">engineering</span>
+                            <h4>Human-in-the-Loop Security Audit</h4>
+                        </div>
+                        <p class="audit-desc">A Backend Engineer will perform a quick security audit before activation.
+                        </p>
+                        <div class="audit-checklist">
+                            <div class="audit-item">
+                                <span class="material-icons-outlined check">check_circle</span>
+                                <span>Authentication scheme validated</span>
+                            </div>
+                            <div class="audit-item">
+                                <span class="material-icons-outlined check">check_circle</span>
+                                <span>Minimum scopes requested</span>
+                            </div>
+                            <div class="audit-item">
+                                <span class="material-icons-outlined check">check_circle</span>
+                                <span>No code injection vulnerabilities</span>
+                            </div>
+                            <div class="audit-item">
+                                <span class="material-icons-outlined check">check_circle</span>
+                                <span>PII masking configured</span>
+                            </div>
+                            <div class="audit-item pending">
+                                <span class="material-icons-outlined">pending</span>
+                                <span>Awaiting approval...</span>
+                            </div>
+                        </div>
+                        <div class="audit-status" id="auditStatus">
+                            <div class="audit-waiting">
+                                <div class="audit-spinner"></div>
+                                <span>Waiting for Review</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Activation -->
+                <div class="step-content" data-step="5">
+                    <div class="activation-container">
+                        <div class="activation-success">
+                            <div class="success-icon">
+                                <span class="material-icons-outlined">check_circle</span>
+                            </div>
+                            <h3>Integration Activated!</h3>
+                            <p>Your integration is now live in your production instance.</p>
+                            <div class="activation-details">
+                                <div class="detail-item">
+                                    <span class="label">Integration Name:</span>
+                                    <span class="value" id="finalIntegrationName">Customer-Internal-CRM</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Status:</span>
+                                    <span class="value status-badge shadow">Shadow Mode (24h)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Capabilities:</span>
+                                    <span class="value">User Management, License Tracking</span>
+                                </div>
+                            </div>
+                            <div class="shadow-notice">
+                                <span class="material-icons-outlined">info</span>
+                                <span>Integration is in <strong>Read-Only Shadow Mode</strong> for the first 24 hours
+                                    for safety monitoring.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button class="secondary-btn" id="prevStepBtn" style="display: none;">Previous</button>
+                <button class="primary-btn" id="nextStepBtn">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
