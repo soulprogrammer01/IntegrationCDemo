@@ -3,7 +3,7 @@ const integrations = [
     { name: 'Certify', vendor: 'Certify', vendorColor: '#6366f1', category: 'Expense Ma...', spend: '$0', status: 'synced', lastSync: '01/11/2026 0...', usage: 100 },
     { name: 'Docusign', vendor: 'DocuSign', vendorColor: '#f59e0b', category: 'E-Signature ...', spend: '$6,347', status: 'synced', lastSync: '01/11/2026 0...', usage: 60 },
     { name: 'Gong', vendor: 'Gong.io', vendorColor: '#22c55e', category: 'Conversation...', spend: '$0', status: 'synced', lastSync: '01/11/2026 0...', usage: 100 },
-    { name: 'Jira Cloud', vendor: 'Praecipio C...', vendorColor: '#a855f7', category: '', spend: '$49,676', status: 'synced', lastSync: '01/11/2026 0...', usage: 100 },
+    { name: 'Jira Cloud', vendor: 'Atlassian', vendorColor: '#a855f7', category: '', spend: '$49,676', status: 'synced', lastSync: '01/11/2026 0...', usage: 100 },
     { name: 'Miro (formerly Realtim...', vendor: 'Miro', vendorColor: '#3b82f6', category: 'Collaborative...', spend: '$18,300', status: 'synced', lastSync: '01/11/2026 0...', usage: 100 },
     { name: 'Salesforce-IN', vendor: 'Salesforce', vendorColor: '#22c55e', category: 'CRM Software', spend: '$0', status: 'synced', lastSync: '01/11/2026 0...', usage: 100 },
     { name: 'Salesforce-US', vendor: 'Salesforce', vendorColor: '#22c55e', category: 'CRM Software', spend: '$0', status: 'synced', lastSync: '01/11/2026 0...', usage: 100 },
@@ -177,7 +177,7 @@ function resetModal() {
     auditStatus.innerHTML = `
         <div class="audit-waiting">
             <div class="audit-spinner"></div>
-            <span>Waiting for Backend Engineer Review</span>
+            <span>Waiting for Engineering Review</span>
         </div>
     `;
 
@@ -381,9 +381,9 @@ async function runDryTest() {
 
     // Sample users for demo
     const sampleUsers = [
-        { name: 'Alice Johnson', email: 'alice.johnson@company.com', initials: 'AJ' },
-        { name: 'Bob Smith', email: 'bob.smith@company.com', initials: 'BS' },
-        { name: 'Carol Williams', email: 'carol.williams@company.com', initials: 'CW' },
+        { name: 'Nidhi Jain', email: 'nidhi@company.com', initials: 'NJ' },
+        { name: 'Mayank Mishra', email: 'mayank@company.com', initials: 'MM' },
+        { name: 'Vibhu Jain', email: 'Vibhu@company.com', initials: 'VJ' },
         { name: 'David Brown', email: 'david.brown@company.com', initials: 'DB' },
         { name: 'Eva Martinez', email: 'eva.martinez@company.com', initials: 'EM' }
     ];
@@ -431,7 +431,7 @@ async function simulateAuditApproval() {
         pendingItem.classList.remove('pending');
         pendingItem.innerHTML = `
             <span class="material-icons-outlined check">check_circle</span>
-            <span>Engineer approved: All checks passed</span>
+            <span>Engineering approved: All checks passed</span>
         `;
     }
 
@@ -440,7 +440,7 @@ async function simulateAuditApproval() {
     auditStatus.innerHTML = `
         <div class="audit-approved">
             <span class="material-icons-outlined">verified</span>
-            <span>Approved by Backend Engineer (John D.)</span>
+            <span>Approved by Backend Engineer (Mayank)</span>
         </div>
     `;
 
